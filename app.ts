@@ -13,9 +13,15 @@ import { loadControllers, scopePerRequest } from 'awilix-koa';
 import co from 'co';
 import render from 'koa-swig';
 import config from '@config/index';
+import serve from 'koa-static';
+
+//koa中没有实现的路由重定向到index.html
+import { historyApiFallback } from 'koa2-connect-history-api-fallback';
 
 const app = new Koa();
 const { port, viewDir, memoryFlag, staticDir } = config;
+//静态资源生效节点
+app.use(serve(staticDir));
 
 const container = createContainer();
 
@@ -38,7 +44,7 @@ app.context.render = co.wrap(
     ext: 'html',
   })
 );
-
+app.use(historyApiFallback({ index: '/', whiteList: ['/api'] }));
 //让所有的路由全部生效
 app.use(loadControllers(`${__dirname}/routers/*.ts`));
 
