@@ -4,7 +4,8 @@
   "description": "SPA+MPA 项目",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only app.ts"
+    "dev": "ts-node-dev --respawn --transpile-only app.ts",
+    "start": "ts-node app.ts"
   },
   "repository": {
     "type": "git",
